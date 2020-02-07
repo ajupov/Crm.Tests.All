@@ -3,7 +3,7 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.5.3" />
+        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.5.4" />
         <PackageReference Include="Crm.v1.Clients" Version="1.0.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
