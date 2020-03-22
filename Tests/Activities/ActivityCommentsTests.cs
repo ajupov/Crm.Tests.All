@@ -7,7 +7,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Activities.Clients;
 using Crm.v1.Clients.Activities.Models;
-using Crm.v1.Clients.Activities.RequestParameters;
+using Crm.v1.Clients.Activities.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Activities
@@ -48,18 +48,18 @@ namespace Crm.Tests.All.Tests.Activities
                     .WithActivityId(activity.Id)
                     .BuildAsync());
 
-            var request = new ActivityCommentGetPagedListRequestParameter
+            var request = new ActivityCommentGetPagedListRequest
             {
                 ActivityId = activity.Id
             };
 
-            var comments = await _activityCommentsClient.GetPagedListAsync(accessToken, request);
+            var response = await _activityCommentsClient.GetPagedListAsync(accessToken, request);
 
-            var results = comments
+            var results = response.Comments
                 .Skip(1)
-                .Zip(comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(comments);
+            Assert.NotEmpty(response.Comments);
             Assert.All(results, Assert.True);
         }
 
@@ -83,14 +83,15 @@ namespace Crm.Tests.All.Tests.Activities
 
             await _activityCommentsClient.CreateAsync(accessToken, comment);
 
-            var request = new ActivityCommentGetPagedListRequestParameter
+            var request = new ActivityCommentGetPagedListRequest
             {
                 ActivityId = activity.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var createdComment = (await _activityCommentsClient.GetPagedListAsync(accessToken, request)).First();
+            var createdComment = (await _activityCommentsClient.GetPagedListAsync(accessToken, request)).Comments
+                .First();
 
             Assert.NotNull(createdComment);
             Assert.Equal(comment.ActivityId, createdComment.ActivityId);

@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Leads.Clients;
 using Crm.v1.Clients.Leads.Models;
-using Crm.v1.Clients.Leads.RequestParameters;
+using Crm.v1.Clients.Leads.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Leads
@@ -87,18 +87,18 @@ namespace Crm.Tests.All.Tests.Leads
             var filterAttributes = new Dictionary<Guid, string> {{attribute.Id, value}};
             var filterSourceIds = new List<Guid> {source.Id};
 
-            var request = new LeadGetPagedListRequestParameter
+            var request = new LeadGetPagedListRequest
             {
                 Attributes = filterAttributes, SourceIds = filterSourceIds
             };
 
-            var leads = await _leadsClient.GetPagedListAsync(accessToken, request);
+            var response = await _leadsClient.GetPagedListAsync(accessToken, request);
 
-            var results = leads
+            var results = response.Leads
                 .Skip(1)
-                .Zip(leads, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Leads, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(leads);
+            Assert.NotEmpty(response.Leads);
             Assert.All(results, Assert.True);
         }
 

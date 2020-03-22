@@ -7,7 +7,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Leads.Clients;
 using Crm.v1.Clients.Leads.Models;
-using Crm.v1.Clients.Leads.RequestParameters;
+using Crm.v1.Clients.Leads.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Leads
@@ -45,18 +45,18 @@ namespace Crm.Tests.All.Tests.Leads
                     .WithLeadId(lead.Id)
                     .BuildAsync());
 
-            var request = new LeadCommentGetPagedListRequestParameter
+            var request = new LeadCommentGetPagedListRequest
             {
                 LeadId = lead.Id
             };
 
-            var comments = await _leadCommentsClient.GetPagedListAsync(accessToken, request);
+            var response = await _leadCommentsClient.GetPagedListAsync(accessToken, request);
 
-            var results = comments
+            var results = response.Comments
                 .Skip(1)
-                .Zip(comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(comments);
+            Assert.NotEmpty(response.Comments);
             Assert.All(results, Assert.True);
         }
 
@@ -78,14 +78,14 @@ namespace Crm.Tests.All.Tests.Leads
 
             await _leadCommentsClient.CreateAsync(accessToken, comment);
 
-            var request = new LeadCommentGetPagedListRequestParameter
+            var request = new LeadCommentGetPagedListRequest
             {
                 LeadId = lead.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var createdComment = (await _leadCommentsClient.GetPagedListAsync(accessToken, request)).First();
+            var createdComment = (await _leadCommentsClient.GetPagedListAsync(accessToken, request)).Comments.First();
 
             Assert.NotNull(createdComment);
             Assert.Equal(comment.LeadId, createdComment.LeadId);

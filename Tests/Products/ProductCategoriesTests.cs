@@ -6,7 +6,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Products.Clients;
 using Crm.v1.Clients.Products.Models;
-using Crm.v1.Clients.Products.RequestParameters;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
@@ -73,18 +73,18 @@ namespace Crm.Tests.All.Tests.Products
                 .WithName(name)
                 .BuildAsync());
 
-            var request = new ProductCategoryGetPagedListRequestParameter
+            var request = new ProductCategoryGetPagedListRequest
             {
                 Name = name
             };
 
-            var categories = await _productCategoriesClient.GetPagedListAsync(accessToken, request);
+            var response = await _productCategoriesClient.GetPagedListAsync(accessToken, request);
 
-            var results = categories
+            var results = response.Categories
                 .Skip(1)
-                .Zip(categories, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Categories, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(categories);
+            Assert.NotEmpty(response.Categories);
             Assert.All(results, Assert.True);
         }
 

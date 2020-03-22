@@ -8,7 +8,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Contacts.Clients;
 using Crm.v1.Clients.Contacts.Models;
-using Crm.v1.Clients.Contacts.RequestParameters;
+using Crm.v1.Clients.Contacts.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Contacts
@@ -47,26 +47,26 @@ namespace Crm.Tests.All.Tests.Contacts
 
             await _contactsClient.UpdateAsync(accessToken, contact);
 
-            var request = new ContactChangeGetPagedListRequestParameter
+            var request = new ContactChangeGetPagedListRequest
             {
                 ContactId = contact.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var changes = await _contactChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _contactChangesClient.GetPagedListAsync(accessToken, request);
 
-            Assert.NotEmpty(changes);
-            Assert.True(changes.All(x => !x.ChangerUserId.IsEmpty()));
-            Assert.True(changes.All(x => x.ContactId == contact.Id));
-            Assert.True(changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
-            Assert.True(changes.First().OldValueJson.IsEmpty());
-            Assert.True(!changes.First().NewValueJson.IsEmpty());
-            Assert.NotNull(changes.First().NewValueJson.FromJsonString<Contact>());
-            Assert.True(!changes.Last().OldValueJson.IsEmpty());
-            Assert.True(!changes.Last().NewValueJson.IsEmpty());
-            Assert.False(changes.Last().OldValueJson.FromJsonString<Contact>().IsDeleted);
-            Assert.True(changes.Last().NewValueJson.FromJsonString<Contact>().IsDeleted);
+            Assert.NotEmpty(response.Changes);
+            Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));
+            Assert.True(response.Changes.All(x => x.ContactId == contact.Id));
+            Assert.True(response.Changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
+            Assert.True(response.Changes.First().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.First().NewValueJson.IsEmpty());
+            Assert.NotNull(response.Changes.First().NewValueJson.FromJsonString<Contact>());
+            Assert.True(!response.Changes.Last().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.Last().NewValueJson.IsEmpty());
+            Assert.False(response.Changes.Last().OldValueJson.FromJsonString<Contact>().IsDeleted);
+            Assert.True(response.Changes.Last().NewValueJson.FromJsonString<Contact>().IsDeleted);
         }
     }
 }

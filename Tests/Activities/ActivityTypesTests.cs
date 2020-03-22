@@ -6,7 +6,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Activities.Clients;
 using Crm.v1.Clients.Activities.Models;
-using Crm.v1.Clients.Activities.RequestParameters;
+using Crm.v1.Clients.Activities.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Activities
@@ -71,20 +71,20 @@ namespace Crm.Tests.All.Tests.Activities
             var name = "Test".WithGuid();
             await Task.WhenAll(_create.ActivityType.WithName(name).BuildAsync());
 
-            var request = new ActivityTypeGetPagedListRequestParameter
+            var request = new ActivityTypeGetPagedListRequest
             {
                 Name = name,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var types = await _activityTypesClient.GetPagedListAsync(accessToken, request);
+            var response = await _activityTypesClient.GetPagedListAsync(accessToken, request);
 
-            var results = types
+            var results = response.Types
                 .Skip(1)
-                .Zip(types, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Types, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(types);
+            Assert.NotEmpty(response.Types);
             Assert.All(results, Assert.True);
         }
 

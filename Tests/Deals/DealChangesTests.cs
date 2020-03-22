@@ -8,7 +8,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Deals.Clients;
 using Crm.v1.Clients.Deals.Models;
-using Crm.v1.Clients.Deals.RequestParameters;
+using Crm.v1.Clients.Deals.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Deals
@@ -48,26 +48,26 @@ namespace Crm.Tests.All.Tests.Deals
 
             await _dealsClient.UpdateAsync(accessToken, deal);
 
-            var request = new DealChangeGetPagedListRequestParameter
+            var request = new DealChangeGetPagedListRequest
             {
                 DealId = deal.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var changes = await _dealChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _dealChangesClient.GetPagedListAsync(accessToken, request);
 
-            Assert.NotEmpty(changes);
-            Assert.True(changes.All(x => !x.ChangerUserId.IsEmpty()));
-            Assert.True(changes.All(x => x.DealId == deal.Id));
-            Assert.True(changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
-            Assert.True(changes.First().OldValueJson.IsEmpty());
-            Assert.True(!changes.First().NewValueJson.IsEmpty());
-            Assert.NotNull(changes.First().NewValueJson.FromJsonString<Deal>());
-            Assert.True(!changes.Last().OldValueJson.IsEmpty());
-            Assert.True(!changes.Last().NewValueJson.IsEmpty());
-            Assert.False(changes.Last().OldValueJson.FromJsonString<Deal>().IsDeleted);
-            Assert.True(changes.Last().NewValueJson.FromJsonString<Deal>().IsDeleted);
+            Assert.NotEmpty(response.Changes);
+            Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));
+            Assert.True(response.Changes.All(x => x.DealId == deal.Id));
+            Assert.True(response.Changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
+            Assert.True(response.Changes.First().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.First().NewValueJson.IsEmpty());
+            Assert.NotNull(response.Changes.First().NewValueJson.FromJsonString<Deal>());
+            Assert.True(!response.Changes.Last().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.Last().NewValueJson.IsEmpty());
+            Assert.False(response.Changes.Last().OldValueJson.FromJsonString<Deal>().IsDeleted);
+            Assert.True(response.Changes.Last().NewValueJson.FromJsonString<Deal>().IsDeleted);
         }
     }
 }

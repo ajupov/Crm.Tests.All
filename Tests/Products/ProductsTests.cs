@@ -8,7 +8,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Products.Clients;
 using Crm.v1.Clients.Products.Models;
-using Crm.v1.Clients.Products.RequestParameters;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
@@ -106,19 +106,19 @@ namespace Crm.Tests.All.Tests.Products
             var filterAttributes = new Dictionary<Guid, string> {{attribute.Id, value}};
             var filterCategoryIds = new List<Guid> {category.Id};
 
-            var request = new ProductGetPagedListRequestParameter
+            var request = new ProductGetPagedListRequest
             {
                 Attributes = filterAttributes,
                 CategoryIds = filterCategoryIds
             };
 
-            var products = await _productsClient.GetPagedListAsync(accessToken, request);
+            var response = await _productsClient.GetPagedListAsync(accessToken, request);
 
-            var results = products
+            var results = response.Products
                 .Skip(1)
-                .Zip(products, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Products, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(products);
+            Assert.NotEmpty(response.Products);
             Assert.All(results, Assert.True);
         }
 

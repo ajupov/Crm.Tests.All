@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Activities.Clients;
 using Crm.v1.Clients.Activities.Models;
-using Crm.v1.Clients.Activities.RequestParameters;
+using Crm.v1.Clients.Activities.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Activities
@@ -50,26 +50,26 @@ namespace Crm.Tests.All.Tests.Activities
 
             await _activitiesClient.UpdateAsync(accessToken, activity);
 
-            var request = new ActivityChangeGetPagedListRequestParameter
+            var request = new ActivityChangeGetPagedListRequest
             {
                 ActivityId = activity.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var changes = await _activityChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _activityChangesClient.GetPagedListAsync(accessToken, request);
 
-            Assert.NotEmpty(changes);
-            Assert.True(changes.All(x => !x.ChangerUserId.IsEmpty()));
-            Assert.True(changes.All(x => x.ActivityId == activity.Id));
-            Assert.True(changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
-            Assert.True(changes.First().OldValueJson.IsEmpty());
-            Assert.True(!changes.First().NewValueJson.IsEmpty());
-            Assert.NotNull(changes.First().NewValueJson.FromJsonString<Activity>());
-            Assert.True(!changes.Last().OldValueJson.IsEmpty());
-            Assert.True(!changes.Last().NewValueJson.IsEmpty());
-            Assert.False(changes.Last().OldValueJson.FromJsonString<Activity>().IsDeleted);
-            Assert.True(changes.Last().NewValueJson.FromJsonString<Activity>().IsDeleted);
+            Assert.NotEmpty(response.Changes);
+            Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));
+            Assert.True(response.Changes.All(x => x.ActivityId == activity.Id));
+            Assert.True(response.Changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
+            Assert.True(response.Changes.First().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.First().NewValueJson.IsEmpty());
+            Assert.NotNull(response.Changes.First().NewValueJson.FromJsonString<Activity>());
+            Assert.True(!response.Changes.Last().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.Last().NewValueJson.IsEmpty());
+            Assert.False(response.Changes.Last().OldValueJson.FromJsonString<Activity>().IsDeleted);
+            Assert.True(response.Changes.Last().NewValueJson.FromJsonString<Activity>().IsDeleted);
         }
     }
 }

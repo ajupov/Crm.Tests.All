@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Contacts.Clients;
 using Crm.v1.Clients.Contacts.Models;
-using Crm.v1.Clients.Contacts.RequestParameters;
+using Crm.v1.Clients.Contacts.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Contacts
@@ -103,18 +103,18 @@ namespace Crm.Tests.All.Tests.Contacts
                     .BuildAsync());
             var filterAttributes = new Dictionary<Guid, string> {{attribute.Id, value}};
 
-            var request = new ContactGetPagedListRequestParameter
+            var request = new ContactGetPagedListRequest
             {
                 Attributes = filterAttributes
             };
 
-            var contacts = await _contactsClient.GetPagedListAsync(accessToken, request);
+            var response = await _contactsClient.GetPagedListAsync(accessToken, request);
 
-            var results = contacts
+            var results = response.Contacts
                 .Skip(1)
-                .Zip(contacts, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Contacts, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(contacts);
+            Assert.NotEmpty(response.Contacts);
             Assert.All(results, Assert.True);
         }
 

@@ -6,7 +6,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Leads.Clients;
 using Crm.v1.Clients.Leads.Models;
-using Crm.v1.Clients.Leads.RequestParameters;
+using Crm.v1.Clients.Leads.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Leads
@@ -74,18 +74,18 @@ namespace Crm.Tests.All.Tests.Leads
                     .WithName(name)
                     .BuildAsync());
 
-            var request = new LeadSourceGetPagedListRequestParameter
+            var request = new LeadSourceGetPagedListRequest
             {
                 Name = name
             };
 
-            var statuses = await _leadSourcesClient.GetPagedListAsync(accessToken, request);
+            var response = await _leadSourcesClient.GetPagedListAsync(accessToken, request);
 
-            var results = statuses
+            var results = response.Sources
                 .Skip(1)
-                .Zip(statuses, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Sources, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(statuses);
+            Assert.NotEmpty(response.Sources);
             Assert.All(results, Assert.True);
         }
 

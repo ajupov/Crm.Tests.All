@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Products.Clients;
 using Crm.v1.Clients.Products.Models;
-using Crm.v1.Clients.Products.RequestParameters;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
@@ -45,27 +45,27 @@ namespace Crm.Tests.All.Tests.Products
 
             await _productCategoriesClient.UpdateAsync(accessToken, category);
 
-            var request = new ProductCategoryChangeGetPagedListRequestParameter
+            var request = new ProductCategoryChangeGetPagedListRequest
             {
                 CategoryId = category.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var changes = await _groupChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _groupChangesClient.GetPagedListAsync(accessToken, request);
 
-            Assert.NotEmpty(changes);
-            Assert.True(changes.All(x => !x.ChangerUserId.IsEmpty()));
-            Assert.True(changes.All(x => x.CategoryId == category.Id));
-            Assert.True(changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
-            Assert.True(changes.First().OldValueJson.IsEmpty());
-            Assert.True(!changes.First().NewValueJson.IsEmpty());
-            Assert.NotNull(changes.First().NewValueJson.FromJsonString<ProductCategory>());
-            Assert.True(!changes.Last().OldValueJson.IsEmpty());
-            Assert.True(!changes.Last().NewValueJson.IsEmpty());
-            Assert.False(changes.Last().OldValueJson.FromJsonString<ProductCategory>().IsDeleted);
-            Assert.True(changes.Last().NewValueJson.FromJsonString<ProductCategory>().IsDeleted);
-            Assert.Equal(changes.Last().NewValueJson.FromJsonString<ProductCategory>().Name, category.Name);
+            Assert.NotEmpty(response.Changes);
+            Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));
+            Assert.True(response.Changes.All(x => x.CategoryId == category.Id));
+            Assert.True(response.Changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
+            Assert.True(response.Changes.First().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.First().NewValueJson.IsEmpty());
+            Assert.NotNull(response.Changes.First().NewValueJson.FromJsonString<ProductCategory>());
+            Assert.True(!response.Changes.Last().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.Last().NewValueJson.IsEmpty());
+            Assert.False(response.Changes.Last().OldValueJson.FromJsonString<ProductCategory>().IsDeleted);
+            Assert.True(response.Changes.Last().NewValueJson.FromJsonString<ProductCategory>().IsDeleted);
+            Assert.Equal(response.Changes.Last().NewValueJson.FromJsonString<ProductCategory>().Name, category.Name);
         }
     }
 }

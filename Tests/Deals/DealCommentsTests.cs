@@ -7,7 +7,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Deals.Clients;
 using Crm.v1.Clients.Deals.Models;
-using Crm.v1.Clients.Deals.RequestParameters;
+using Crm.v1.Clients.Deals.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Deals
@@ -47,18 +47,18 @@ namespace Crm.Tests.All.Tests.Deals
                     .WithDealId(deal.Id)
                     .BuildAsync());
 
-            var request = new DealCommentGetPagedListRequestParameter
+            var request = new DealCommentGetPagedListRequest
             {
                 DealId = deal.Id,
             };
 
-            var comments = await _dealCommentsClient.GetPagedListAsync(accessToken, request);
+            var response = await _dealCommentsClient.GetPagedListAsync(accessToken, request);
 
-            var results = comments
+            var results = response.Comments
                 .Skip(1)
-                .Zip(comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(comments);
+            Assert.NotEmpty(response.Comments);
             Assert.All(results, Assert.True);
         }
 
@@ -82,14 +82,14 @@ namespace Crm.Tests.All.Tests.Deals
 
             await _dealCommentsClient.CreateAsync(accessToken, comment);
 
-            var request = new DealCommentGetPagedListRequestParameter
+            var request = new DealCommentGetPagedListRequest
             {
                 DealId = deal.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var createdComment = (await _dealCommentsClient.GetPagedListAsync(accessToken, request)).First();
+            var createdComment = (await _dealCommentsClient.GetPagedListAsync(accessToken, request)).Comments.First();
 
             Assert.NotNull(createdComment);
             Assert.Equal(comment.DealId, createdComment.DealId);

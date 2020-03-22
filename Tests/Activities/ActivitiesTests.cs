@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Activities.Clients;
 using Crm.v1.Clients.Activities.Models;
-using Crm.v1.Clients.Activities.RequestParameters;
+using Crm.v1.Clients.Activities.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Activities
@@ -97,20 +97,20 @@ namespace Crm.Tests.All.Tests.Activities
             var filterAttributes = new Dictionary<Guid, string> {{attribute.Id, value}};
             var filterStatusIds = new List<Guid> {status.Id};
 
-            var request = new ActivityGetPagedListRequestParameter
+            var request = new ActivityGetPagedListRequest
             {
                 AllAttributes = false,
                 Attributes = filterAttributes,
                 StatusIds = filterStatusIds
             };
 
-            var activities = await _activitiesClient.GetPagedListAsync(accessToken, request);
+            var response = await _activitiesClient.GetPagedListAsync(accessToken, request);
 
-            var results = activities
+            var results = response.Activities
                 .Skip(1)
-                .Zip(activities, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Activities, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(activities);
+            Assert.NotEmpty(response.Activities);
             Assert.All(results, Assert.True);
         }
 

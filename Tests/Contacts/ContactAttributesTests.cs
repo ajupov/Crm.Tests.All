@@ -8,7 +8,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Contacts.Clients;
 using Crm.v1.Clients.Contacts.Models;
-using Crm.v1.Clients.Contacts.RequestParameters;
+using Crm.v1.Clients.Contacts.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Contacts
@@ -88,20 +88,19 @@ namespace Crm.Tests.All.Tests.Contacts
                     .BuildAsync());
             var filterTypes = new List<AttributeType> {AttributeType.Text};
 
-            var request = new ContactAttributeGetPagedListRequestParameter
+            var request = new ContactAttributeGetPagedListRequest
             {
                 Key = key,
                 Types = filterTypes,
             };
 
-            var attributes = await _contactAttributesClient.GetPagedListAsync(accessToken, request);
+            var response = await _contactAttributesClient.GetPagedListAsync(accessToken, request);
 
-            var results = attributes
+            var results = response.Attributes
                 .Skip(1)
-                .Zip(attributes,
-                    (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Attributes, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(attributes);
+            Assert.NotEmpty(response.Attributes);
             Assert.All(results, Assert.True);
         }
 

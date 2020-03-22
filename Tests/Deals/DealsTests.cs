@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Deals.Clients;
 using Crm.v1.Clients.Deals.Models;
-using Crm.v1.Clients.Deals.RequestParameters;
+using Crm.v1.Clients.Deals.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Deals
@@ -97,19 +97,19 @@ namespace Crm.Tests.All.Tests.Deals
             var filterAttributes = new Dictionary<Guid, string> {{attribute.Id, value}};
             var filterSourceIds = new List<Guid> {status.Id};
 
-            var request = new DealGetPagedListRequestParameter
+            var request = new DealGetPagedListRequest
             {
                 Attributes = filterAttributes,
                 StatusIds = filterSourceIds
             };
 
-            var deals = await _dealsClient.GetPagedListAsync(accessToken, request);
+            var response = await _dealsClient.GetPagedListAsync(accessToken, request);
 
-            var results = deals
+            var results = response.Deals
                 .Skip(1)
-                .Zip(deals, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Deals, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(deals);
+            Assert.NotEmpty(response.Deals);
             Assert.All(results, Assert.True);
         }
 

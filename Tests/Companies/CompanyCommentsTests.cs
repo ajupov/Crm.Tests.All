@@ -7,7 +7,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Companies.Clients;
 using Crm.v1.Clients.Companies.Models;
-using Crm.v1.Clients.Companies.RequestParameters;
+using Crm.v1.Clients.Companies.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Companies
@@ -49,17 +49,17 @@ namespace Crm.Tests.All.Tests.Companies
                     .WithCompanyId(company.Id)
                     .BuildAsync());
 
-            var request = new CompanyCommentGetPagedListRequestParameter
+            var request = new CompanyCommentGetPagedListRequest
             {
                 CompanyId = company.Id
             };
 
-            var comments = await _companyCommentsClient.GetPagedListAsync(accessToken, request);
-            var results = comments
+            var response = await _companyCommentsClient.GetPagedListAsync(accessToken, request);
+            var results = response.Comments
                 .Skip(1)
-                .Zip(comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Comments, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(comments);
+            Assert.NotEmpty(response.Comments);
             Assert.All(results, Assert.True);
         }
 
@@ -84,12 +84,13 @@ namespace Crm.Tests.All.Tests.Companies
 
             await _companyCommentsClient.CreateAsync(accessToken, comment);
 
-            var request = new CompanyCommentGetPagedListRequestParameter
+            var request = new CompanyCommentGetPagedListRequest
             {
                 CompanyId = company.Id
             };
 
-            var createdComment = (await _companyCommentsClient.GetPagedListAsync(accessToken, request)).First();
+            var createdComment = (await _companyCommentsClient.GetPagedListAsync(accessToken, request)).Comments
+                .First();
 
             Assert.NotNull(createdComment);
             Assert.Equal(comment.CompanyId, createdComment.CompanyId);

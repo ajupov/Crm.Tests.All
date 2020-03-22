@@ -6,7 +6,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Deals.Clients;
 using Crm.v1.Clients.Deals.Models;
-using Crm.v1.Clients.Deals.RequestParameters;
+using Crm.v1.Clients.Deals.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Deals
@@ -71,18 +71,18 @@ namespace Crm.Tests.All.Tests.Deals
                     .WithName(name)
                     .BuildAsync());
 
-            var request = new DealTypeGetPagedListRequestParameter
+            var request = new DealTypeGetPagedListRequest
             {
                 Name = name
             };
 
-            var types = await _dealTypesClient.GetPagedListAsync(accessToken, request);
+            var response = await _dealTypesClient.GetPagedListAsync(accessToken, request);
 
-            var results = types
+            var results = response.Types
                 .Skip(1)
-                .Zip(types, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Types, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(types);
+            Assert.NotEmpty(response.Types);
             Assert.All(results, Assert.True);
         }
 

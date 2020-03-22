@@ -9,7 +9,7 @@ using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.v1.Clients.Leads.Clients;
 using Crm.v1.Clients.Leads.Models;
-using Crm.v1.Clients.Leads.RequestParameters;
+using Crm.v1.Clients.Leads.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Leads
@@ -45,27 +45,27 @@ namespace Crm.Tests.All.Tests.Leads
 
             await _leadSourcesClient.UpdateAsync(accessToken, source);
 
-            var request = new LeadSourceChangeGetPagedListRequestParameter
+            var request = new LeadSourceChangeGetPagedListRequest
             {
                 SourceId = source.Id,
                 SortBy = "CreateDateTime",
                 OrderBy = "asc"
             };
 
-            var changes = await _sourceChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _sourceChangesClient.GetPagedListAsync(accessToken, request);
 
-            Assert.NotEmpty(changes);
-            Assert.True(changes.All(x => !x.ChangerUserId.IsEmpty()));
-            Assert.True(changes.All(x => x.SourceId == source.Id));
-            Assert.True(changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
-            Assert.True(changes.First().OldValueJson.IsEmpty());
-            Assert.True(!changes.First().NewValueJson.IsEmpty());
-            Assert.NotNull(changes.First().NewValueJson.FromJsonString<LeadSource>());
-            Assert.True(!changes.Last().OldValueJson.IsEmpty());
-            Assert.True(!changes.Last().NewValueJson.IsEmpty());
-            Assert.False(changes.Last().OldValueJson.FromJsonString<LeadSource>().IsDeleted);
-            Assert.True(changes.Last().NewValueJson.FromJsonString<LeadSource>().IsDeleted);
-            Assert.Equal(changes.Last().NewValueJson.FromJsonString<LeadSource>().Name, source.Name);
+            Assert.NotEmpty(response.Changes);
+            Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));
+            Assert.True(response.Changes.All(x => x.SourceId == source.Id));
+            Assert.True(response.Changes.All(x => x.CreateDateTime.IsMoreThanMinValue()));
+            Assert.True(response.Changes.First().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.First().NewValueJson.IsEmpty());
+            Assert.NotNull(response.Changes.First().NewValueJson.FromJsonString<LeadSource>());
+            Assert.True(!response.Changes.Last().OldValueJson.IsEmpty());
+            Assert.True(!response.Changes.Last().NewValueJson.IsEmpty());
+            Assert.False(response.Changes.Last().OldValueJson.FromJsonString<LeadSource>().IsDeleted);
+            Assert.True(response.Changes.Last().NewValueJson.FromJsonString<LeadSource>().IsDeleted);
+            Assert.Equal(response.Changes.Last().NewValueJson.FromJsonString<LeadSource>().Name, source.Name);
         }
     }
 }
