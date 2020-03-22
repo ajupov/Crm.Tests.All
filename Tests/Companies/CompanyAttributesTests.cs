@@ -96,11 +96,11 @@ namespace Crm.Tests.All.Tests.Companies
 
             var response = await _companyAttributesClient.GetPagedListAsync(accessToken, request);
 
-            var results = response.Changes
+            var results = response.Attributes
                 .Skip(1)
-                .Zip(response.Changes, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
+                .Zip(response.Attributes, (previous, current) => current.CreateDateTime >= previous.CreateDateTime);
 
-            Assert.NotEmpty(response.Changes);
+            Assert.NotEmpty(response.Attributes);
             Assert.All(results, Assert.True);
         }
 
