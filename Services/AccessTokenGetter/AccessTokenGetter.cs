@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Crm.Tests.All.Settings;
-using Crm.v1.Clients.OAuth.Clients;
+using Crm.V1.Clients.OAuth.Clients;
 using Microsoft.Extensions.Options;
 
 namespace Crm.Tests.All.Services.AccessTokenGetter

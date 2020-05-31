@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.v1.Clients.Deals.Clients;
-using Crm.v1.Clients.Deals.Models;
+using Crm.V1.Clients.Deals.Clients;
+using Crm.V1.Clients.Deals.Models;
 
 namespace Crm.Tests.All.Builders.Deals
 {

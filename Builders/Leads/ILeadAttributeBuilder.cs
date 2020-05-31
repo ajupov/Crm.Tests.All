@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Crm.Common.All.Types.AttributeType;
-using Crm.v1.Clients.Leads.Models;
+using Crm.V1.Clients.Leads.Models;
 
 namespace Crm.Tests.All.Builders.Leads
 {

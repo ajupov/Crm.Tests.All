@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.v1.Clients.Companies.Clients;
-using Crm.v1.Clients.Companies.Models;
+using Crm.V1.Clients.Companies.Clients;
+using Crm.V1.Clients.Companies.Models;
 
 namespace Crm.Tests.All.Builders.Companies
 {

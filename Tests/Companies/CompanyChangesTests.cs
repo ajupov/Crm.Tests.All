@@ -6,9 +6,9 @@ using Ajupov.Utils.All.Json;
 using Ajupov.Utils.All.String;
 using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.v1.Clients.Companies.Clients;
-using Crm.v1.Clients.Companies.Models;
-using Crm.v1.Clients.Companies.Requests;
+using Crm.V1.Clients.Companies.Clients;
+using Crm.V1.Clients.Companies.Models;
+using Crm.V1.Clients.Companies.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Companies

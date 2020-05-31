@@ -6,9 +6,9 @@ using Ajupov.Utils.All.Json;
 using Ajupov.Utils.All.String;
 using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.v1.Clients.Contacts.Clients;
-using Crm.v1.Clients.Contacts.Models;
-using Crm.v1.Clients.Contacts.Requests;
+using Crm.V1.Clients.Contacts.Clients;
+using Crm.V1.Clients.Contacts.Models;
+using Crm.V1.Clients.Contacts.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Contacts

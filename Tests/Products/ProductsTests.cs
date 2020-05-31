@@ -6,9 +6,9 @@ using Ajupov.Utils.All.DateTime;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.v1.Clients.Products.Clients;
-using Crm.v1.Clients.Products.Models;
-using Crm.v1.Clients.Products.Requests;
+using Crm.V1.Clients.Products.Clients;
+using Crm.V1.Clients.Products.Models;
+using Crm.V1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
@@ -297,8 +297,7 @@ namespace Crm.Tests.All.Tests.Products
                         _create.Product
                             .WithStatusId(status.Id)
                             .WithName("Test".WithGuid())
-                            .BuildAsync()
-                    ))
+                            .BuildAsync()))
                 .Select(x => x.Id)
                 .ToList();
 
@@ -324,8 +323,7 @@ namespace Crm.Tests.All.Tests.Products
                         _create.Product
                             .WithStatusId(status.Id)
                             .WithName("Test".WithGuid())
-                            .BuildAsync()
-                    ))
+                            .BuildAsync()))
                 .Select(x => x.Id)
                 .ToList();
 

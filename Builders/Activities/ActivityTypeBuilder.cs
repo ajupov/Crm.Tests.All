@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.v1.Clients.Activities.Clients;
-using Crm.v1.Clients.Activities.Models;
+using Crm.V1.Clients.Activities.Clients;
+using Crm.V1.Clients.Activities.Models;
 
 namespace Crm.Tests.All.Builders.Activities
 {

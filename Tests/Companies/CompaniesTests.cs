@@ -7,20 +7,20 @@ using Ajupov.Utils.All.Guid;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.v1.Clients.Companies.Clients;
-using Crm.v1.Clients.Companies.Models;
-using Crm.v1.Clients.Companies.Requests;
+using Crm.V1.Clients.Companies.Clients;
+using Crm.V1.Clients.Companies.Models;
+using Crm.V1.Clients.Companies.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Companies
 {
-    public class CompanyTests
+    public class CompaniesTests
     {
         private readonly IAccessTokenGetter _accessTokenGetter;
         private readonly ICreate _create;
         private readonly ICompaniesClient _companiesClient;
 
-        public CompanyTests(IAccessTokenGetter accessTokenGetter, ICreate create, ICompaniesClient companiesClient)
+        public CompaniesTests(IAccessTokenGetter accessTokenGetter, ICreate create, ICompaniesClient companiesClient)
         {
             _accessTokenGetter = accessTokenGetter;
             _create = create;

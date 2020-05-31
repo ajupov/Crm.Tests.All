@@ -11,7 +11,7 @@ using Crm.Tests.All.Builders.Products;
 using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Settings;
-using Crm.v1.Clients;
+using Crm.V1.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

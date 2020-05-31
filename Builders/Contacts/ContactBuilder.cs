@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Ajupov.Utils.All.Guid;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.v1.Clients.Contacts.Clients;
-using Crm.v1.Clients.Contacts.Models;
+using Crm.V1.Clients.Contacts.Clients;
+using Crm.V1.Clients.Contacts.Models;
 
 namespace Crm.Tests.All.Builders.Contacts
 {
