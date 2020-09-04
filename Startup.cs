@@ -1,6 +1,4 @@
 using Ajupov.Infrastructure.All.Configuration;
-using Ajupov.Infrastructure.All.TestsDependencyInjection;
-using Ajupov.Infrastructure.All.TestsDependencyInjection.Attributes;
 using Crm.Tests.All.Builders.Activities;
 using Crm.Tests.All.Builders.Companies;
 using Crm.Tests.All.Builders.Contacts;
@@ -15,13 +13,11 @@ using Crm.V1.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: DependencyInject("Crm.Tests.All.Startup", "Crm.Tests.All")]
-
 namespace Crm.Tests.All
 {
-    public class Startup : BaseStartup
+    public class Startup
     {
-        protected override void Configure(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             var configuration = Configuration.GetConfiguration();
 
