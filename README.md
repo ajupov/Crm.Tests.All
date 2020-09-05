@@ -1,6 +1,6 @@
 # Crm.Tests.All
 
-API tests for https://litecrm.org
+API tests for [Lite CRM](https://litecrm.org)
 
 ## Usage
 You must use account for `Resource Owner Password Credentials` flow.
