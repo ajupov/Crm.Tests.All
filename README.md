@@ -1,10 +1,8 @@
 # Crm.Tests.All
-
 API tests for [Lite CRM](https://litecrm.org)
 
 ## Usage
 You must use account for `Resource Owner Password Credentials` flow.
-
 For the local running tests you should create `appsettings.local.json` file in the root of the repository with content:
 ```
 {
