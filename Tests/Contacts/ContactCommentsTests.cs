@@ -86,9 +86,7 @@ namespace Crm.Tests.All.Tests.Contacts
 
             var request = new ContactCommentGetPagedListRequest
             {
-                ContactId = contact.Id,
-                SortBy = "CreateDateTime",
-                OrderBy = "asc"
+                ContactId = contact.Id
             };
 
             var createdComment = (await _contactCommentsClient.GetPagedListAsync(accessToken, request)).Comments

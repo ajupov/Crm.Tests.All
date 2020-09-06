@@ -85,9 +85,7 @@ namespace Crm.Tests.All.Tests.Activities
 
             var request = new ActivityCommentGetPagedListRequest
             {
-                ActivityId = activity.Id,
-                SortBy = "CreateDateTime",
-                OrderBy = "asc"
+                ActivityId = activity.Id
             };
 
             var createdComment = (await _activityCommentsClient.GetPagedListAsync(accessToken, request)).Comments

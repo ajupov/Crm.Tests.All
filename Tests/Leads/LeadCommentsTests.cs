@@ -80,9 +80,7 @@ namespace Crm.Tests.All.Tests.Leads
 
             var request = new LeadCommentGetPagedListRequest
             {
-                LeadId = lead.Id,
-                SortBy = "CreateDateTime",
-                OrderBy = "asc"
+                LeadId = lead.Id
             };
 
             var createdComment = (await _leadCommentsClient.GetPagedListAsync(accessToken, request)).Comments.First();

@@ -84,9 +84,7 @@ namespace Crm.Tests.All.Tests.Deals
 
             var request = new DealCommentGetPagedListRequest
             {
-                DealId = deal.Id,
-                SortBy = "CreateDateTime",
-                OrderBy = "asc"
+                DealId = deal.Id
             };
 
             var createdComment = (await _dealCommentsClient.GetPagedListAsync(accessToken, request)).Comments.First();
