@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <NoWarn>SA0001;SA1003;SA1009;SA1012;SA1013;SA1101;SA1116;SA1117;SA1200;SA1300;SA1309;SA1413;SA1600;SA1633</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.7.1" />
-        <PackageReference Include="Crm.V1.Clients" Version="2.2.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.8.0" />
+        <PackageReference Include="Crm.V1.Clients" Version="2.3.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
-        <PackageReference Include="Xunit.DependencyInjection" Version="7.0.2" />
+        <PackageReference Include="Xunit.DependencyInjection" Version="7.1.0" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
