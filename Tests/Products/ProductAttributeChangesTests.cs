@@ -6,30 +6,30 @@ using Ajupov.Utils.All.Json;
 using Ajupov.Utils.All.String;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
-using Crm.V1.Clients.Products.Requests;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
 {
     public class ProductAttributeChangesTests
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
         private readonly ICreate _create;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductAttributesClient _productAttributesClient;
         private readonly IProductAttributeChangesClient _attributeChangesClient;
 
         public ProductAttributeChangesTests(
-            IAccessTokenGetter accessTokenGetter,
             ICreate create,
+            IDefaultRequestHeadersService defaultRequestHeadersService,
             IProductAttributesClient productAttributesClient,
             IProductAttributeChangesClient attributeChangesClient)
         {
-            _accessTokenGetter = accessTokenGetter;
             _create = create;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _productAttributesClient = productAttributesClient;
             _attributeChangesClient = attributeChangesClient;
         }
@@ -37,7 +37,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenGetPagedList_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attribute = await _create.ProductAttribute.BuildAsync();
 
@@ -45,7 +45,7 @@ namespace Crm.Tests.All.Tests.Products
             attribute.Key = "Test".WithGuid();
             attribute.IsDeleted = true;
 
-            await _productAttributesClient.UpdateAsync(accessToken, attribute);
+            await _productAttributesClient.UpdateAsync(attribute, headers);
 
             var request = new ProductAttributeChangeGetPagedListRequest
             {
@@ -54,7 +54,7 @@ namespace Crm.Tests.All.Tests.Products
                 OrderBy = "asc"
             };
 
-            var response = await _attributeChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _attributeChangesClient.GetPagedListAsync(request, headers);
 
             Assert.NotEmpty(response.Changes);
             Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));

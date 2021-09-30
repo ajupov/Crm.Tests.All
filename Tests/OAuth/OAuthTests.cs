@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Settings;
-using Crm.V1.Clients.OAuth.Clients;
+using Crm.v1.Clients.OAuth.Clients;
 using Microsoft.Extensions.Options;
 using Xunit;
 
@@ -23,7 +23,7 @@ namespace Crm.Tests.All.Tests.OAuth
         [Fact]
         public async Task WhenGetTokens_ThenSuccess()
         {
-            var tokens = await _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password);
+            var tokens = await _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password, null);
 
             Assert.NotNull(tokens.AccessToken);
             Assert.NotNull(tokens.RefreshToken);
@@ -36,7 +36,7 @@ namespace Crm.Tests.All.Tests.OAuth
         {
             var tokens = await _create.OAuth.BuildAsync();
 
-            var newTokens = await _oauthClient.RefreshTokensAsync(tokens.RefreshToken);
+            var newTokens = await _oauthClient.RefreshTokensAsync(tokens.RefreshToken, null);
 
             Assert.NotNull(newTokens.AccessToken);
             Assert.NotNull(newTokens.RefreshToken);

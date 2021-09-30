@@ -1,23 +1,23 @@
 using System.Threading.Tasks;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
 
 namespace Crm.Tests.All.Builders.Products
 {
     public class ProductCategoryBuilder : IProductCategoryBuilder
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductCategoriesClient _productCategoriesClient;
         private readonly ProductCategory _category;
 
         public ProductCategoryBuilder(
-            IAccessTokenGetter accessTokenGetter,
+            IDefaultRequestHeadersService defaultRequestHeadersService,
             IProductCategoriesClient productCategoriesClient)
         {
             _productCategoriesClient = productCategoriesClient;
-            _accessTokenGetter = accessTokenGetter;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _category = new ProductCategory
             {
                 Name = "Test".WithGuid(),
@@ -41,11 +41,11 @@ namespace Crm.Tests.All.Builders.Products
 
         public async Task<ProductCategory> BuildAsync()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
-            var id = await _productCategoriesClient.CreateAsync(accessToken, _category);
+            var id = await _productCategoriesClient.CreateAsync(_category, headers);
 
-            return await _productCategoriesClient.GetAsync(accessToken, id);
+            return await _productCategoriesClient.GetAsync(id, headers);
         }
     }
 }

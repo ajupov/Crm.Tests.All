@@ -1,10 +1,8 @@
-using Crm.Tests.All.Builders.Activities;
-using Crm.Tests.All.Builders.Companies;
-using Crm.Tests.All.Builders.Contacts;
-using Crm.Tests.All.Builders.Deals;
-using Crm.Tests.All.Builders.Leads;
+using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
+using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
+using Crm.Tests.All.Builders.Tasks;
 
 namespace Crm.Tests.All.Services.Creator
 {
@@ -20,44 +18,32 @@ namespace Crm.Tests.All.Services.Creator
 
         IProductAttributeBuilder ProductAttribute { get; }
 
-        ILeadBuilder Lead { get; }
+        ICustomerBuilder Customer { get; }
 
-        ILeadSourceBuilder LeadSource { get; }
+        ICustomerSourceBuilder CustomerSource { get; }
 
-        ILeadAttributeBuilder LeadAttribute { get; }
+        ICustomerAttributeBuilder CustomerAttribute { get; }
 
-        ILeadCommentBuilder LeadComment { get; }
+        ICustomerCommentBuilder CustomerComment { get; }
 
-        ICompanyBuilder Company { get; }
+        IOrderBuilder Order { get; }
 
-        ICompanyAttributeBuilder CompanyAttribute { get; }
+        IOrderStatusBuilder OrderStatus { get; }
 
-        ICompanyCommentBuilder CompanyComment { get; }
+        IOrderTypeBuilder OrderType { get; }
 
-        IContactBuilder Contact { get; }
+        IOrderAttributeBuilder OrderAttribute { get; }
 
-        IContactAttributeBuilder ContactAttribute { get; }
+        IOrderCommentBuilder OrderComment { get; }
 
-        IContactCommentBuilder ContactComment { get; }
+        ITaskBuilder Task { get; }
 
-        IDealBuilder Deal { get; }
+        ITaskStatusBuilder TaskStatus { get; }
 
-        IDealStatusBuilder DealStatus { get; }
+        ITaskTypeBuilder TaskType { get; }
 
-        IDealTypeBuilder DealType { get; }
+        ITaskAttributeBuilder TaskAttribute { get; }
 
-        IDealAttributeBuilder DealAttribute { get; }
-
-        IDealCommentBuilder DealComment { get; }
-
-        IActivityBuilder Activity { get; }
-
-        IActivityStatusBuilder ActivityStatus { get; }
-
-        IActivityTypeBuilder ActivityType { get; }
-
-        IActivityAttributeBuilder ActivityAttribute { get; }
-
-        IActivityCommentBuilder ActivityComment { get; }
+        ITaskCommentBuilder TaskComment { get; }
     }
 }

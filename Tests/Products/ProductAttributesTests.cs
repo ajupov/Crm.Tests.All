@@ -4,49 +4,39 @@ using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
-using Crm.V1.Clients.Products.Requests;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
 {
     public class ProductAttributesTests
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
         private readonly ICreate _create;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductAttributesClient _productAttributesClient;
 
         public ProductAttributesTests(
-            IAccessTokenGetter accessTokenGetter,
             ICreate create,
+            IDefaultRequestHeadersService defaultRequestHeadersService,
             IProductAttributesClient productAttributesClient)
         {
-            _accessTokenGetter = accessTokenGetter;
             _create = create;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _productAttributesClient = productAttributesClient;
-        }
-
-        [Fact]
-        public async Task WhenGetTypes_ThenSuccess()
-        {
-            var accessToken = await _accessTokenGetter.GetAsync();
-
-            var types = await _productAttributesClient.GetTypesAsync(accessToken);
-
-            Assert.NotEmpty(types);
         }
 
         [Fact]
         public async Task WhenGet_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attributeId = (await _create.ProductAttribute.BuildAsync()).Id;
 
-            var attribute = await _productAttributesClient.GetAsync(accessToken, attributeId);
+            var attribute = await _productAttributesClient.GetAsync(attributeId, headers);
 
             Assert.NotNull(attribute);
             Assert.Equal(attributeId, attribute.Id);
@@ -55,7 +45,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenGetList_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attributeIds = (
                     await Task.WhenAll(
@@ -69,7 +59,7 @@ namespace Crm.Tests.All.Tests.Products
                 .Select(x => x.Id)
                 .ToList();
 
-            var attributes = await _productAttributesClient.GetListAsync(accessToken, attributeIds);
+            var attributes = await _productAttributesClient.GetListAsync(attributeIds, headers);
 
             Assert.NotEmpty(attributes);
             Assert.Equal(attributeIds.Count, attributes.Count);
@@ -78,7 +68,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenGetPagedList_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var key = "Test".WithGuid();
             await Task.WhenAll(
@@ -86,7 +76,7 @@ namespace Crm.Tests.All.Tests.Products
                     .WithType(AttributeType.Text)
                     .WithKey(key)
                     .BuildAsync());
-            var filterTypes = new List<AttributeType> {AttributeType.Text};
+            var filterTypes = new List<AttributeType> { AttributeType.Text };
 
             var request = new ProductAttributeGetPagedListRequest
             {
@@ -94,7 +84,7 @@ namespace Crm.Tests.All.Tests.Products
                 Types = filterTypes,
             };
 
-            var response = await _productAttributesClient.GetPagedListAsync(accessToken, request);
+            var response = await _productAttributesClient.GetPagedListAsync(request, headers);
 
             var results = response.Attributes
                 .Skip(1)
@@ -107,7 +97,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenCreate_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attribute = new ProductAttribute
             {
@@ -116,9 +106,9 @@ namespace Crm.Tests.All.Tests.Products
                 IsDeleted = false
             };
 
-            var createdAttributeId = await _productAttributesClient.CreateAsync(accessToken, attribute);
+            var createdAttributeId = await _productAttributesClient.CreateAsync(attribute, headers);
 
-            var createdAttribute = await _productAttributesClient.GetAsync(accessToken, createdAttributeId);
+            var createdAttribute = await _productAttributesClient.GetAsync(createdAttributeId, headers);
 
             Assert.NotNull(createdAttribute);
             Assert.Equal(createdAttributeId, createdAttribute.Id);
@@ -131,7 +121,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenUpdate_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attribute = await _create.ProductAttribute
                 .WithType(AttributeType.Text)
@@ -142,9 +132,9 @@ namespace Crm.Tests.All.Tests.Products
             attribute.Key = "Test".WithGuid();
             attribute.IsDeleted = true;
 
-            await _productAttributesClient.UpdateAsync(accessToken, attribute);
+            await _productAttributesClient.UpdateAsync(attribute, headers);
 
-            var updatedAttribute = await _productAttributesClient.GetAsync(accessToken, attribute.Id);
+            var updatedAttribute = await _productAttributesClient.GetAsync(attribute.Id, headers);
 
             Assert.Equal(attribute.Type, updatedAttribute.Type);
             Assert.Equal(attribute.Key, updatedAttribute.Key);
@@ -154,7 +144,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenDelete_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attributeIds = (
                     await Task.WhenAll(
@@ -168,9 +158,9 @@ namespace Crm.Tests.All.Tests.Products
                 .Select(x => x.Id)
                 .ToList();
 
-            await _productAttributesClient.DeleteAsync(accessToken, attributeIds);
+            await _productAttributesClient.DeleteAsync(attributeIds, headers);
 
-            var attributes = await _productAttributesClient.GetListAsync(accessToken, attributeIds);
+            var attributes = await _productAttributesClient.GetListAsync(attributeIds, headers);
 
             Assert.All(attributes, x => Assert.True(x.IsDeleted));
         }
@@ -178,7 +168,7 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenRestore_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var attributeIds = (
                     await Task.WhenAll(
@@ -192,9 +182,9 @@ namespace Crm.Tests.All.Tests.Products
                 .Select(x => x.Id)
                 .ToList();
 
-            await _productAttributesClient.RestoreAsync(accessToken, attributeIds);
+            await _productAttributesClient.RestoreAsync(attributeIds, headers);
 
-            var attributes = await _productAttributesClient.GetListAsync(accessToken, attributeIds);
+            var attributes = await _productAttributesClient.GetListAsync(attributeIds, headers);
 
             Assert.All(attributes, x => Assert.False(x.IsDeleted));
         }

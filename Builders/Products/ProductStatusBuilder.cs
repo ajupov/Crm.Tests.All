@@ -1,21 +1,23 @@
 using System.Threading.Tasks;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
 
 namespace Crm.Tests.All.Builders.Products
 {
     public class ProductStatusBuilder : IProductStatusBuilder
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductStatusesClient _productStatusesClient;
         private readonly ProductStatus _status;
 
-        public ProductStatusBuilder(IAccessTokenGetter accessTokenGetter, IProductStatusesClient productStatusesClient)
+        public ProductStatusBuilder(
+            IDefaultRequestHeadersService defaultRequestHeadersService,
+            IProductStatusesClient productStatusesClient)
         {
             _productStatusesClient = productStatusesClient;
-            _accessTokenGetter = accessTokenGetter;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _status = new ProductStatus
             {
                 Name = "Test".WithGuid(),
@@ -39,11 +41,11 @@ namespace Crm.Tests.All.Builders.Products
 
         public async Task<ProductStatus> BuildAsync()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
-            var id = await _productStatusesClient.CreateAsync(accessToken, _status);
+            var id = await _productStatusesClient.CreateAsync(_status, headers);
 
-            return await _productStatusesClient.GetAsync(accessToken, id);
+            return await _productStatusesClient.GetAsync(id, headers);
         }
     }
 }

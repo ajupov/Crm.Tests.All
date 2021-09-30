@@ -5,30 +5,30 @@ using Ajupov.Utils.All.Guid;
 using Ajupov.Utils.All.Json;
 using Ajupov.Utils.All.String;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
 using Crm.Tests.All.Services.Creator;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
-using Crm.V1.Clients.Products.Requests;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
+using Crm.v1.Clients.Products.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Products
 {
     public class ProductStatusChangesTests
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
         private readonly ICreate _create;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductStatusesClient _productStatusesClient;
         private readonly IProductStatusChangesClient _productStatusChangesClient;
 
         public ProductStatusChangesTests(
-            IAccessTokenGetter accessTokenGetter,
             ICreate create,
+            IDefaultRequestHeadersService defaultRequestHeadersService,
             IProductStatusesClient productStatusesClient,
             IProductStatusChangesClient productStatusChangesClient)
         {
-            _accessTokenGetter = accessTokenGetter;
             _create = create;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _productStatusesClient = productStatusesClient;
             _productStatusChangesClient = productStatusChangesClient;
         }
@@ -36,14 +36,14 @@ namespace Crm.Tests.All.Tests.Products
         [Fact]
         public async Task WhenGetPagedList_ThenSuccess()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             var status = await _create.ProductStatus.BuildAsync();
 
             status.Name = "Test".WithGuid();
             status.IsDeleted = true;
 
-            await _productStatusesClient.UpdateAsync(accessToken, status);
+            await _productStatusesClient.UpdateAsync(status, headers);
 
             var request = new ProductStatusChangeGetPagedListRequest
             {
@@ -52,7 +52,7 @@ namespace Crm.Tests.All.Tests.Products
                 OrderBy = "asc"
             };
 
-            var response = await _productStatusChangesClient.GetPagedListAsync(accessToken, request);
+            var response = await _productStatusChangesClient.GetPagedListAsync(request, headers);
 
             Assert.NotEmpty(response.Changes);
             Assert.True(response.Changes.All(x => !x.ChangerUserId.IsEmpty()));

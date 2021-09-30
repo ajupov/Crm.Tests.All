@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.Guid;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
 
 namespace Crm.Tests.All.Builders.Products
 {
     public class ProductBuilder : IProductBuilder
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductsClient _productsClient;
         private readonly Product _product;
 
-        public ProductBuilder(IAccessTokenGetter accessTokenGetter, IProductsClient productsClient)
+        public ProductBuilder(
+            IDefaultRequestHeadersService defaultRequestHeadersService,
+            IProductsClient productsClient)
         {
             _productsClient = productsClient;
-            _accessTokenGetter = accessTokenGetter;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _product = new Product
             {
                 Type = ProductType.Material,
@@ -119,16 +121,16 @@ namespace Crm.Tests.All.Builders.Products
 
         public async Task<Product> BuildAsync()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
             if (_product.StatusId.IsEmpty())
             {
                 throw new InvalidOperationException(nameof(_product.StatusId));
             }
 
-            var id = await _productsClient.CreateAsync(accessToken, _product);
+            var id = await _productsClient.CreateAsync(_product, headers);
 
-            return await _productsClient.GetAsync(accessToken, id);
+            return await _productsClient.GetAsync(id, headers);
         }
     }
 }

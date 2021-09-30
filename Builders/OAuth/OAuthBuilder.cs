@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Crm.Tests.All.Settings;
-using Crm.V1.Clients.OAuth.Clients;
-using Crm.V1.Clients.OAuth.Models;
+using Crm.v1.Clients.OAuth.Clients;
+using Crm.v1.Clients.OAuth.Responses;
 using Microsoft.Extensions.Options;
 
 namespace Crm.Tests.All.Builders.OAuth
@@ -17,9 +17,9 @@ namespace Crm.Tests.All.Builders.OAuth
             _oauthClient = oauthClient;
         }
 
-        public Task<Tokens> BuildAsync()
+        public Task<TokenResponse> BuildAsync()
         {
-            return _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password);
+            return _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password, null);
         }
     }
 }

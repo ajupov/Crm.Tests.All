@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Crm.V1.Clients.Products.Models;
+using Crm.v1.Clients.Products.Models;
 
 namespace Crm.Tests.All.Builders.Products
 {

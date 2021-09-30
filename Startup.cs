@@ -1,15 +1,13 @@
 using Ajupov.Infrastructure.All.Configuration;
-using Crm.Tests.All.Builders.Activities;
-using Crm.Tests.All.Builders.Companies;
-using Crm.Tests.All.Builders.Contacts;
-using Crm.Tests.All.Builders.Deals;
-using Crm.Tests.All.Builders.Leads;
+using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
+using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
-using Crm.Tests.All.Services.AccessTokenGetter;
+using Crm.Tests.All.Builders.Tasks;
 using Crm.Tests.All.Services.Creator;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
 using Crm.Tests.All.Settings;
-using Crm.V1.Clients;
+using Crm.v1.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,7 +29,7 @@ namespace Crm.Tests.All
                 .ConfigureClients(clientId, apiHost, oauthHost);
 
             services
-                .AddSingleton<IAccessTokenGetter, AccessTokenGetter>()
+                .AddSingleton<IDefaultRequestHeadersService, DefaultRequestHeadersService>()
                 .AddTransient<ICreate, Create>();
 
             services
@@ -43,26 +41,20 @@ namespace Crm.Tests.All
                 .AddTransient<IProductAttributeBuilder, ProductAttributeBuilder>()
                 .AddTransient<IProductCategoryBuilder, ProductCategoryBuilder>()
                 .AddTransient<IProductStatusBuilder, ProductStatusBuilder>()
-                .AddTransient<ILeadBuilder, LeadBuilder>()
-                .AddTransient<ILeadAttributeBuilder, LeadAttributeBuilder>()
-                .AddTransient<ILeadCommentBuilder, LeadCommentBuilder>()
-                .AddTransient<ILeadSourceBuilder, LeadSourceBuilder>()
-                .AddTransient<ICompanyBuilder, CompanyBuilder>()
-                .AddTransient<ICompanyAttributeBuilder, CompanyAttributeBuilder>()
-                .AddTransient<ICompanyCommentBuilder, CompanyCommentBuilder>()
-                .AddTransient<IContactBuilder, ContactBuilder>()
-                .AddTransient<IContactAttributeBuilder, ContactAttributeBuilder>()
-                .AddTransient<IContactCommentBuilder, ContactCommentBuilder>()
-                .AddTransient<IDealBuilder, DealBuilder>()
-                .AddTransient<IDealAttributeBuilder, DealAttributeBuilder>()
-                .AddTransient<IDealCommentBuilder, DealCommentBuilder>()
-                .AddTransient<IDealStatusBuilder, DealStatusBuilder>()
-                .AddTransient<IDealTypeBuilder, DealTypeBuilder>()
-                .AddTransient<IActivityBuilder, ActivityBuilder>()
-                .AddTransient<IActivityAttributeBuilder, ActivityAttributeBuilder>()
-                .AddTransient<IActivityCommentBuilder, ActivityCommentBuilder>()
-                .AddTransient<IActivityStatusBuilder, ActivityStatusBuilder>()
-                .AddTransient<IActivityTypeBuilder, ActivityTypeBuilder>();
+                .AddTransient<ICustomerBuilder, CustomerBuilder>()
+                .AddTransient<ICustomerAttributeBuilder, CustomerAttributeBuilder>()
+                .AddTransient<ICustomerCommentBuilder, CustomerCommentBuilder>()
+                .AddTransient<ICustomerSourceBuilder, CustomerSourceBuilder>()
+                .AddTransient<IOrderBuilder, OrderBuilder>()
+                .AddTransient<IOrderAttributeBuilder, OrderAttributeBuilder>()
+                .AddTransient<IOrderCommentBuilder, OrderCommentBuilder>()
+                .AddTransient<IOrderStatusBuilder, OrderStatusBuilder>()
+                .AddTransient<IOrderTypeBuilder, OrderTypeBuilder>()
+                .AddTransient<ITaskBuilder, TaskBuilder>()
+                .AddTransient<ITaskAttributeBuilder, TaskAttributeBuilder>()
+                .AddTransient<ITaskCommentBuilder, TaskCommentBuilder>()
+                .AddTransient<ITaskStatusBuilder, TaskStatusBuilder>()
+                .AddTransient<ITaskTypeBuilder, TaskTypeBuilder>();
         }
     }
 }

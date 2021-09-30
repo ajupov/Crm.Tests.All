@@ -1,24 +1,24 @@
 using System.Threading.Tasks;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
-using Crm.Tests.All.Services.AccessTokenGetter;
-using Crm.V1.Clients.Products.Clients;
-using Crm.V1.Clients.Products.Models;
+using Crm.Tests.All.Services.DefaultRequestHeadersService;
+using Crm.v1.Clients.Products.Clients;
+using Crm.v1.Clients.Products.Models;
 
 namespace Crm.Tests.All.Builders.Products
 {
     public class ProductAttributeBuilder : IProductAttributeBuilder
     {
-        private readonly IAccessTokenGetter _accessTokenGetter;
+        private readonly IDefaultRequestHeadersService _defaultRequestHeadersService;
         private readonly IProductAttributesClient _productAttributesClient;
         private readonly ProductAttribute _attribute;
 
         public ProductAttributeBuilder(
-            IAccessTokenGetter accessTokenGetter,
+            IDefaultRequestHeadersService defaultRequestHeadersService,
             IProductAttributesClient productAttributesClient)
         {
             _productAttributesClient = productAttributesClient;
-            _accessTokenGetter = accessTokenGetter;
+            _defaultRequestHeadersService = defaultRequestHeadersService;
             _attribute = new ProductAttribute
             {
                 Type = AttributeType.Text,
@@ -50,11 +50,11 @@ namespace Crm.Tests.All.Builders.Products
 
         public async Task<ProductAttribute> BuildAsync()
         {
-            var accessToken = await _accessTokenGetter.GetAsync();
+            var headers = await _defaultRequestHeadersService.GetAsync();
 
-            var id = await _productAttributesClient.CreateAsync(accessToken, _attribute);
+            var id = await _productAttributesClient.CreateAsync(_attribute, headers);
 
-            return await _productAttributesClient.GetAsync(accessToken, id);
+            return await _productAttributesClient.GetAsync(id, headers);
         }
     }
 }
