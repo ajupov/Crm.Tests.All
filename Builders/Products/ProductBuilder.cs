@@ -23,6 +23,7 @@ namespace Crm.Tests.All.Builders.Products
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _product = new Product
             {
+                Id = Guid.NewGuid(),
                 Type = ProductType.Material,
                 Name = "Test".WithGuid(),
                 VendorCode = "Test",

@@ -129,6 +129,7 @@ namespace Crm.Tests.All.Tests.Tasks
 
             var task = new CrmTask
             {
+                Id = Guid.NewGuid(),
                 TypeId = type.Id,
                 StatusId = taskStatus.Id,
                 Name = "Test".WithGuid(),

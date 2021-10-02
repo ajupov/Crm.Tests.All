@@ -131,6 +131,7 @@ namespace Crm.Tests.All.Tests.Orders
 
             var order = new Order
             {
+                Id = Guid.NewGuid(),
                 TypeId = type.Id,
                 StatusId = orderStatus.Id,
                 Name = "Test".WithGuid(),

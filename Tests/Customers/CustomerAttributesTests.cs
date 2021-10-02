@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -101,6 +102,7 @@ namespace Crm.Tests.All.Tests.Customers
 
             var attribute = new CustomerAttribute
             {
+                Id = Guid.NewGuid(),
                 Type = AttributeType.Text,
                 Key = "Test".WithGuid(),
                 IsDeleted = false

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
@@ -21,6 +22,7 @@ namespace Crm.Tests.All.Builders.Customers
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _attribute = new CustomerAttribute
             {
+                Id = Guid.NewGuid(),
                 Type = AttributeType.Text,
                 Key = "Test".WithGuid(),
                 IsDeleted = false

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
@@ -20,6 +21,7 @@ namespace Crm.Tests.All.Builders.Orders
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _status = new OrderStatus
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 IsFinish = false,
                 IsDeleted = false

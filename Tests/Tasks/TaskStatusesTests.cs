@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
@@ -97,6 +98,7 @@ namespace Crm.Tests.All.Tests.Tasks
 
             var status = new CrmTaskStatus
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 IsDeleted = false
             };

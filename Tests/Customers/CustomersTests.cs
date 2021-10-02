@@ -115,6 +115,7 @@ namespace Crm.Tests.All.Tests.Customers
 
             var customer = new Customer
             {
+                Id = Guid.NewGuid(),
                 SourceId = source.Id,
                 Surname = "Test".WithGuid(),
                 Name = "Test".WithGuid(),

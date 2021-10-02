@@ -22,6 +22,7 @@ namespace Crm.Tests.All.Builders.Customers
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _comment = new CustomerComment
             {
+                Id = Guid.NewGuid(),
                 Value = "Test".WithGuid()
             };
         }

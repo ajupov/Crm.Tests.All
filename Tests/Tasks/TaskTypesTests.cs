@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Ajupov.Utils.All.DateTime;
 using Crm.Tests.All.Extensions;
@@ -95,6 +96,7 @@ namespace Crm.Tests.All.Tests.Tasks
 
             var type = new TaskType
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 IsDeleted = false
             };

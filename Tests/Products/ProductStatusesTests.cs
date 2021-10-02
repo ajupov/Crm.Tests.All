@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
@@ -96,6 +97,7 @@ namespace Crm.Tests.All.Tests.Products
 
             var status = new ProductStatus
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 IsDeleted = false
             };

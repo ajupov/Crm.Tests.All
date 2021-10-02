@@ -126,6 +126,7 @@ namespace Crm.Tests.All.Tests.Products
 
             var product = new Product
             {
+                Id = Guid.NewGuid(),
                 Type = ProductType.Material,
                 StatusId = status.Id,
                 Name = "Test".WithGuid(),

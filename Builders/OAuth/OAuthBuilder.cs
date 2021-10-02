@@ -19,7 +19,7 @@ namespace Crm.Tests.All.Builders.OAuth
 
         public Task<TokenResponse> BuildAsync()
         {
-            return _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password, null);
+            return _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password);
         }
     }
 }

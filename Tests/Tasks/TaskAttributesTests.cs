@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ajupov.Utils.All.DateTime;
@@ -102,6 +103,7 @@ namespace Crm.Tests.All.Tests.Tasks
 
             var attribute = new TaskAttribute
             {
+                Id = Guid.NewGuid(),
                 Type = AttributeType.Text,
                 Key = "Test".WithGuid(),
                 IsDeleted = false

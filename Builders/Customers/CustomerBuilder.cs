@@ -23,6 +23,7 @@ namespace Crm.Tests.All.Builders.Customers
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _customer = new Customer
             {
+                Id = Guid.NewGuid(),
                 Surname = "Test".WithGuid(),
                 Name = "Test".WithGuid(),
                 Patronymic = "Test".WithGuid(),

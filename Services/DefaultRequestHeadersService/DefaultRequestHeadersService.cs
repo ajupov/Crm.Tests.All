@@ -51,7 +51,7 @@ namespace Crm.Tests.All.Services.DefaultRequestHeadersService
 
         private async Task<Dictionary<string, string>> GetInternalAsync()
         {
-            var tokens = await _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password, null);
+            var tokens = await _oauthClient.GetTokensAsync(_oauthSettings.Username, _oauthSettings.Password, new Dictionary<string, string>());
 
             return new Dictionary<string, string>
             {

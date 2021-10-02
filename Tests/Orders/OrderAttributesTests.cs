@@ -1,7 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
+using Ajupov.Utils.All.Json;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.Creator;
@@ -101,6 +106,7 @@ namespace Crm.Tests.All.Tests.Orders
 
             var attribute = new OrderAttribute
             {
+                Id = Guid.NewGuid(),
                 Type = AttributeType.Text,
                 Key = "Test".WithGuid(),
                 IsDeleted = false

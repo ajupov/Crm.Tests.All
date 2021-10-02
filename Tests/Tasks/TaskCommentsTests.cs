@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Ajupov.Utils.All.DateTime;
 using Ajupov.Utils.All.Guid;
@@ -77,6 +78,7 @@ namespace Crm.Tests.All.Tests.Tasks
 
             var comment = new TaskComment
             {
+                Id = Guid.NewGuid(),
                 TaskId = task.Id,
                 Value = "Test".WithGuid()
             };

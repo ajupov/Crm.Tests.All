@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
@@ -20,6 +21,7 @@ namespace Crm.Tests.All.Builders.Customers
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _source = new CustomerSource
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 IsDeleted = false
             };

@@ -22,6 +22,7 @@ namespace Crm.Tests.All.Builders.Tasks
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _comment = new TaskComment
             {
+                Id = Guid.NewGuid(),
                 Value = "Test".WithGuid()
             };
         }

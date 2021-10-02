@@ -21,6 +21,7 @@ namespace Crm.Tests.All.Builders.Orders
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _order = new Order
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 StartDateTime = DateTime.UtcNow,
                 EndDateTime = DateTime.UtcNow.AddDays(1),

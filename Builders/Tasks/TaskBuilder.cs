@@ -22,6 +22,7 @@ namespace Crm.Tests.All.Builders.Tasks
             _defaultRequestHeadersService = defaultRequestHeadersService;
             _task = new CrmTask
             {
+                Id = Guid.NewGuid(),
                 Name = "Test".WithGuid(),
                 Description = "Test".WithGuid(),
                 Result = "Test".WithGuid(),

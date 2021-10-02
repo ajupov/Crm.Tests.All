@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
@@ -72,6 +73,7 @@ namespace Crm.Tests.All.Tests.Customers
 
             var comment = new CustomerComment
             {
+                Id = Guid.NewGuid(),
                 CustomerId = customer.Id,
                 Value = "Test".WithGuid()
             };
