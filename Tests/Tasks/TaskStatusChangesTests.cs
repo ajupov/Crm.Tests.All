@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
 using Ajupov.Utils.All.Guid;
 using Ajupov.Utils.All.Json;
@@ -8,9 +7,10 @@ using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
 using Crm.v1.Clients.Tasks.Clients;
-using Crm.v1.Clients.Tasks.Requests;
+using Crm.v1.Clients.Tasks.Models;
 using Xunit;
 using CrmTaskStatus = Crm.v1.Clients.Tasks.Models.TaskStatus;
+using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Tests.All.Tests.Tasks
 {

@@ -6,7 +6,6 @@ using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
 using Crm.v1.Clients.Tasks.Clients;
 using Crm.v1.Clients.Tasks.Models;
-using Crm.v1.Clients.Tasks.Requests;
 using Xunit;
 using Task = System.Threading.Tasks.Task;
 

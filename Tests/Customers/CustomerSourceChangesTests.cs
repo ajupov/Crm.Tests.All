@@ -9,7 +9,6 @@ using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
 using Crm.v1.Clients.Customers.Clients;
 using Crm.v1.Clients.Customers.Models;
-using Crm.v1.Clients.Customers.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Customers

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Crm.v1.Clients.OAuth.Responses;
+using Crm.v1.Clients.OAuth.Models;
 
 namespace Crm.Tests.All.Builders.OAuth
 {

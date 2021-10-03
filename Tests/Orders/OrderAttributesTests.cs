@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Ajupov.Utils.All.DateTime;
-using Ajupov.Utils.All.Json;
 using Crm.Common.All.Types.AttributeType;
 using Crm.Tests.All.Extensions;
 using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
 using Crm.v1.Clients.Orders.Clients;
 using Crm.v1.Clients.Orders.Models;
-using Crm.v1.Clients.Orders.Requests;
 using Xunit;
 
 namespace Crm.Tests.All.Tests.Orders
