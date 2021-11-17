@@ -11,7 +11,7 @@ For the local running tests you should create `appsettings.local.json` file in t
     "OAuthHost": "http://localhost:3000"
   },
   "OAuthSettings": {
-    "ClientId": "site-local",
+    "ClientId": "tests",
     "Username": "", // From account
     "Password": ""  // From account
   }
