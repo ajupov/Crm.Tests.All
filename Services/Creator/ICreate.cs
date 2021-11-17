@@ -2,6 +2,7 @@ using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
 using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
+using Crm.Tests.All.Builders.Suppliers;
 using Crm.Tests.All.Builders.Tasks;
 
 namespace Crm.Tests.All.Services.Creator
@@ -45,5 +46,11 @@ namespace Crm.Tests.All.Services.Creator
         ITaskAttributeBuilder TaskAttribute { get; }
 
         ITaskCommentBuilder TaskComment { get; }
+
+        ISupplierBuilder Supplier { get; }
+
+        ISupplierAttributeBuilder SupplierAttribute { get; }
+
+        ISupplierCommentBuilder SupplierComment { get; }
     }
 }

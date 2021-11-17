@@ -3,6 +3,7 @@ using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
 using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
+using Crm.Tests.All.Builders.Suppliers;
 using Crm.Tests.All.Builders.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -54,5 +55,11 @@ namespace Crm.Tests.All.Services.Creator
         public ITaskAttributeBuilder TaskAttribute => _services.GetService<ITaskAttributeBuilder>();
 
         public ITaskCommentBuilder TaskComment => _services.GetService<ITaskCommentBuilder>();
+
+        public ISupplierBuilder Supplier => _services.GetService<ISupplierBuilder>();
+
+        public ISupplierAttributeBuilder SupplierAttribute => _services.GetService<ISupplierAttributeBuilder>();
+
+        public ISupplierCommentBuilder SupplierComment => _services.GetService<ISupplierCommentBuilder>();
     }
 }

@@ -3,6 +3,7 @@ using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
 using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
+using Crm.Tests.All.Builders.Suppliers;
 using Crm.Tests.All.Builders.Tasks;
 using Crm.Tests.All.Services.Creator;
 using Crm.Tests.All.Services.DefaultRequestHeadersService;
@@ -54,7 +55,10 @@ namespace Crm.Tests.All
                 .AddTransient<ITaskAttributeBuilder, TaskAttributeBuilder>()
                 .AddTransient<ITaskCommentBuilder, TaskCommentBuilder>()
                 .AddTransient<ITaskStatusBuilder, TaskStatusBuilder>()
-                .AddTransient<ITaskTypeBuilder, TaskTypeBuilder>();
+                .AddTransient<ITaskTypeBuilder, TaskTypeBuilder>()
+                .AddTransient<ISupplierBuilder, SupplierBuilder>()
+                .AddTransient<ISupplierAttributeBuilder, SupplierAttributeBuilder>()
+                .AddTransient<ISupplierCommentBuilder, SupplierCommentBuilder>();
         }
     }
 }
