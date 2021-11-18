@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <NoWarn>SA0001;SA1003;SA1009;SA1012;SA1013;SA1101;SA1116;SA1117;SA1200;SA1300;SA1309;SA1413;SA1600;SA1633</NoWarn>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.10.0" />
-        <PackageReference Include="Crm.V1.Clients" Version="2.6.1" />
+        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.11.0" />
+        <PackageReference Include="Crm.V1.Clients" Version="2.7.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="Xunit.DependencyInjection" Version="8.2.0" />
