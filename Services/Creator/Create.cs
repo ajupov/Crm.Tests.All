@@ -3,6 +3,7 @@ using Crm.Tests.All.Builders.Customers;
 using Crm.Tests.All.Builders.OAuth;
 using Crm.Tests.All.Builders.Orders;
 using Crm.Tests.All.Builders.Products;
+using Crm.Tests.All.Builders.Stock;
 using Crm.Tests.All.Builders.Suppliers;
 using Crm.Tests.All.Builders.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,5 +62,13 @@ namespace Crm.Tests.All.Services.Creator
         public ISupplierAttributeBuilder SupplierAttribute => _services.GetService<ISupplierAttributeBuilder>();
 
         public ISupplierCommentBuilder SupplierComment => _services.GetService<ISupplierCommentBuilder>();
+
+        public IStockArrivalBuilder StockArrival => _services.GetService<IStockArrivalBuilder>();
+
+        public IStockBalanceBuilder StockBalance => _services.GetService<IStockBalanceBuilder>();
+
+        public IStockConsumptionBuilder StockConsumption => _services.GetService<IStockConsumptionBuilder>();
+
+        public IStockRoomBuilder StockRoom => _services.GetService<IStockRoomBuilder>();
     }
 }

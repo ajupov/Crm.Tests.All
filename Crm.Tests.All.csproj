@@ -6,8 +6,8 @@
         <LangVersion>10</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.11.0" />
-        <PackageReference Include="Crm.V1.Clients" Version="2.7.0" />
+        <PackageReference Include="Ajupov.Infrastructure.All" Version="1.11.3" />
+        <PackageReference Include="Crm.V1.Clients" Version="2.7.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="Xunit.DependencyInjection" Version="8.2.0" />
