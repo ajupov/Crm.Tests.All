@@ -14,7 +14,7 @@ namespace Crm.Tests.All.Builders.Stock
 
         StockArrivalBuilder AsDeleted();
 
-        StockArrivalBuilder WithItem(Guid productId, decimal count);
+        StockArrivalBuilder WithItem(Guid roomId, Guid productId, decimal count);
 
         Task<StockArrival> BuildAsync();
     }

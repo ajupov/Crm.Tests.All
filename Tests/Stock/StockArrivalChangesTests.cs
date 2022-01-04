@@ -37,13 +37,15 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
 
             var arrival = await _create.StockArrival
                 .WithType(StockArrivalType.ArrivalFromSupplier)
-                .WithItem(product.Id, 1)
+                .WithItem(room.Id, product.Id, 1)
                 .BuildAsync();
 
             arrival.IsDeleted = true;

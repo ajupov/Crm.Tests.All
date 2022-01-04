@@ -38,6 +38,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -45,7 +47,7 @@ namespace Crm.Tests.All.Tests.Stock
             var consumption = await _create.StockConsumption
                 .WithType(StockConsumptionType.SaleToCustomer)
                 .WithOrderId(Guid.NewGuid())
-                .WithItem(product.Id, 1)
+                .WithItem(room.Id, product.Id, 1)
                 .BuildAsync();
 
             consumption.IsDeleted = true;

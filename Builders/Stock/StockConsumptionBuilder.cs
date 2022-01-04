@@ -55,11 +55,12 @@ namespace Crm.Tests.All.Builders.Stock
             return this;
         }
 
-        public StockConsumptionBuilder WithItem(Guid productId, decimal count)
+        public StockConsumptionBuilder WithItem(Guid roomId, Guid productId, decimal count)
         {
             _consumption.Items ??= new List<StockConsumptionItem>();
             _consumption.Items.Add(new StockConsumptionItem
             {
+                RoomId = roomId,
                 ProductId = productId,
                 Count = count
             });

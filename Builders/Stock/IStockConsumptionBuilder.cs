@@ -14,7 +14,7 @@ namespace Crm.Tests.All.Builders.Stock
 
         StockConsumptionBuilder AsDeleted();
 
-        StockConsumptionBuilder WithItem(Guid productId, decimal count);
+        StockConsumptionBuilder WithItem(Guid roomId, Guid productId, decimal count);
 
         Task<StockConsumption> BuildAsync();
     }

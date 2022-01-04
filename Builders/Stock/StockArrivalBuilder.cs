@@ -56,11 +56,12 @@ namespace Crm.Tests.All.Builders.Stock
             return this;
         }
 
-        public StockArrivalBuilder WithItem(Guid productId, decimal count)
+        public StockArrivalBuilder WithItem(Guid roomId, Guid productId, decimal count)
         {
             _arrival.Items ??= new List<StockArrivalItem>();
             _arrival.Items.Add(new StockArrivalItem
             {
+                RoomId = roomId,
                 ProductId = productId,
                 Count = count
             });

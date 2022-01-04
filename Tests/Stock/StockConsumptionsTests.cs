@@ -34,6 +34,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -42,7 +44,7 @@ namespace Crm.Tests.All.Tests.Stock
                     await _create.StockConsumption
                         .WithType(StockConsumptionType.SaleToCustomer)
                         .WithOrderId(Guid.NewGuid())
-                        .WithItem(product.Id, 1)
+                        .WithItem(room.Id, product.Id, 1)
                         .BuildAsync())
                 .Id;
 
@@ -58,6 +60,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -67,12 +71,12 @@ namespace Crm.Tests.All.Tests.Stock
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync(),
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync())
                 )
                 .Select(x => x.Id)
@@ -90,6 +94,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -98,12 +104,12 @@ namespace Crm.Tests.All.Tests.Stock
                 _create.StockConsumption
                     .WithType(StockConsumptionType.SaleToCustomer)
                     .WithOrderId(Guid.NewGuid())
-                    .WithItem(product.Id, 1)
+                    .WithItem(room.Id, product.Id, 1)
                     .BuildAsync(),
                 _create.StockConsumption
                     .WithType(StockConsumptionType.SaleToCustomer)
                     .WithOrderId(Guid.NewGuid())
-                    .WithItem(product.Id, 1)
+                    .WithItem(room.Id, product.Id, 1)
                     .BuildAsync());
 
             var request = new StockConsumptionGetPagedListRequest();
@@ -124,6 +130,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -138,6 +146,7 @@ namespace Crm.Tests.All.Tests.Stock
                 {
                     new ()
                     {
+                        RoomId = room.Id,
                         ProductId = product.Id,
                         Count = 1
                     }
@@ -163,13 +172,15 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
 
             var consumption = await _create.StockConsumption
                 .WithType(StockConsumptionType.ReturnToSupplier)
-                .WithItem(product.Id, 1)
+                .WithItem(room.Id, product.Id, 1)
                 .BuildAsync();
 
             var orderId = Guid.NewGuid();
@@ -198,6 +209,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -207,12 +220,12 @@ namespace Crm.Tests.All.Tests.Stock
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync(),
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync())
                 )
                 .Select(x => x.Id)
@@ -231,6 +244,8 @@ namespace Crm.Tests.All.Tests.Stock
             var headers = await _defaultRequestHeadersService.GetAsync();
 
             var productStatus = await _create.ProductStatus.BuildAsync();
+            var room = await _create.StockRoom
+                .BuildAsync();
             var product = await _create.Product
                 .WithStatusId(productStatus.Id)
                 .BuildAsync();
@@ -240,12 +255,12 @@ namespace Crm.Tests.All.Tests.Stock
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync(),
                         _create.StockConsumption
                             .WithType(StockConsumptionType.SaleToCustomer)
                             .WithOrderId(Guid.NewGuid())
-                            .WithItem(product.Id, 1)
+                            .WithItem(room.Id, product.Id, 1)
                             .BuildAsync())
                 )
                 .Select(x => x.Id)
