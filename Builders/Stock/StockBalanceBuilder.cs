@@ -63,14 +63,6 @@ namespace Crm.Tests.All.Builders.Stock
             return this;
         }
 
-        public StockBalanceBuilder WithUniqueElementId(Guid uniqueElementId)
-        {
-            _balance.UniqueElementIds ??= new List<Guid>();
-            _balance.UniqueElementIds.Add(uniqueElementId);
-
-            return this;
-        }
-
         public async Task<StockBalance> BuildAsync()
         {
             var headers = await _defaultRequestHeadersService.GetAsync();

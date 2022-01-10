@@ -16,8 +16,6 @@ namespace Crm.Tests.All.Builders.Stock
 
         StockBalanceBuilder AsDeleted();
 
-        StockBalanceBuilder WithUniqueElementId(Guid uniqueElementId);
-
         Task<StockBalance> BuildAsync();
     }
 }
